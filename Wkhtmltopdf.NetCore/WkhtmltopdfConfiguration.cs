@@ -21,9 +21,9 @@ namespace Wkhtmltopdf.NetCore
         /// <param name="wkhtmltopdfRelativePath">Optional. Relative path to the directory containing wkhtmltopdf. Default is "Rotativa". Download at https://wkhtmltopdf.org/downloads.html</param>
         public static IServiceCollection AddWkhtmltopdf(this IServiceCollection services, string wkhtmltopdfRelativePath = "Rotativa")
         {
-            RotativaPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, wkhtmltopdfRelativePath);
+            RotativaPath = wkhtmltopdfRelativePath;
 
-            if (!Directory.Exists(RotativaPath))
+            if (!Directory.Exists(RotativaPath) && !File.Exists(RotativaPath))
             {
                 throw new Exception("Folder containing wkhtmltopdf not found, searched for " + RotativaPath);
             }
