@@ -47,7 +47,28 @@ namespace Wkhtmltopdf.NetCore
 
             if (!File.Exists(rotativaLocation))
             {
-                throw new Exception("wkhtmltopdf not found, searched for " + rotativaLocation);
+                // Try without OS Folder
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    rotativaLocation = Path.Combine(wkhtmlPath, "wkhtmltopdf.exe");
+                }
+                else
+                {
+                    rotativaLocation = Path.Combine(wkhtmlPath, "wkhtmltopdf");
+                }
+
+                if (!File.Exists(rotativaLocation))
+                {
+                    // Try path only
+                    if (File.Exists(wkhtmlPath))
+                    {
+                        rotativaLocation = wkhtmlPath;
+                    }
+                    else
+                    {
+                        throw new Exception("wkhtmltopdf not found, searched for " + rotativaLocation);
+                    }
+                }
             }
 
             using (var proc = new Process())
