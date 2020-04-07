@@ -4,18 +4,15 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace Wkhtmltopdf.NetCore
-{
-    public class ConvertOptions
-    {
-        public ConvertOptions()
-        {
+namespace Wkhtmltopdf.NetCore {
+    public class ConvertOptions {
+        public ConvertOptions() {
             this.PageMargins = new Margins();
         }
 
-        protected void SetOptions(ConvertOptions options)
-        {
+        protected void SetOptions(ConvertOptions options) {
             this.PageMargins = new Margins();
+
             this.PageSize = options.PageSize;
             this.PageWidth = options.PageWidth;
             this.PageHeight = options.PageHeight;
@@ -27,6 +24,11 @@ namespace Wkhtmltopdf.NetCore
             this.HeaderHtml = options.HeaderHtml;
             this.HeaderSpacing = options.HeaderSpacing;
             this.FooterHtml = options.FooterHtml;
+            this.FooterLeft = options.FooterLeft;
+            this.FooterCenter = options.FooterCenter;
+            this.FooterRight = options.FooterRight;
+            this.FooterFontName = options.FooterFontName;
+            this.FooterFontSize = options.FooterFontSize;
             this.FooterSpacing = options.FooterSpacing;
         }
 
@@ -61,8 +63,7 @@ namespace Wkhtmltopdf.NetCore
         /// </summary>
         public Margins PageMargins { get; set; }
 
-        protected string GetContentType()
-        {
+        protected string GetContentType() {
             return "application/pdf";
         }
 
@@ -103,13 +104,42 @@ namespace Wkhtmltopdf.NetCore
         public string FooterHtml { get; set; }
 
         /// <summary>
+        /// Left aligned footer text
+        /// </summary>
+        [OptionFlag("--footer-left")]
+        public string FooterLeft { get; set; }
+
+        /// <summary>
+        /// Centered footer text
+        /// </summary>
+        [OptionFlag("--footer-center")]
+        public string FooterCenter { get; set; }
+
+        /// <summary>
+        /// Right aligned footer text
+        /// </summary>
+        [OptionFlag("--footer-right")]
+        public string FooterRight { get; set; }
+
+        /// <summary>
+        /// Set footer font name (default Arial)
+        /// </summary>
+        [OptionFlag("--footer-font-name")]
+        public string FooterFontName { get; set; }
+
+        /// <summary>
+        /// Set footer font size (default 12)
+        /// </summary>
+        [OptionFlag("--footer-font-size")]
+        public int? FooterFontSize { get; set; }
+
+        /// <summary>
         /// Sets the footer spacing.
         /// </summary>
         [OptionFlag("--footer-spacing")]
         public int? FooterSpacing { get; set; }
 
-        protected string GetConvertOptions()
-        {
+        protected string GetConvertOptions() {
             var result = new StringBuilder();
 
             if (this.PageMargins != null)
@@ -121,13 +151,11 @@ namespace Wkhtmltopdf.NetCore
             return result.ToString().Trim();
         }
 
-        protected string GetConvertBaseOptions()
-        {
+        protected string GetConvertBaseOptions() {
             var result = new StringBuilder();
 
             var fields = this.GetType().GetProperties();
-            foreach (var fi in fields)
-            {
+            foreach (var fi in fields) {
                 var of = fi.GetCustomAttributes(typeof(OptionFlag), true).FirstOrDefault() as OptionFlag;
                 if (of == null)
                     continue;
@@ -136,21 +164,15 @@ namespace Wkhtmltopdf.NetCore
                 if (value == null)
                     continue;
 
-                if (fi.PropertyType == typeof(Dictionary<string, string>))
-                {
+                if (fi.PropertyType == typeof(Dictionary<string, string>)) {
                     var dictionary = (Dictionary<string, string>)value;
-                    foreach (var d in dictionary)
-                    {
+                    foreach (var d in dictionary) {
                         result.AppendFormat(" {0} {1} {2}", of.Name, d.Key, d.Value);
                     }
-                }
-                else if (fi.PropertyType == typeof(bool))
-                {
+                } else if (fi.PropertyType == typeof(bool)) {
                     if ((bool)value)
                         result.AppendFormat(CultureInfo.InvariantCulture, " {0}", of.Name);
-                }
-                else
-                {
+                } else {
                     result.AppendFormat(CultureInfo.InvariantCulture, " {0} {1}", of.Name, value);
                 }
             }
