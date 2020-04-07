@@ -172,8 +172,10 @@ namespace Wkhtmltopdf.NetCore {
                 } else if (fi.PropertyType == typeof(bool)) {
                     if ((bool)value)
                         result.AppendFormat(CultureInfo.InvariantCulture, " {0}", of.Name);
-                } else {
+                } else if (fi.PropertyType == typeof(int)) {
                     result.AppendFormat(CultureInfo.InvariantCulture, " {0} {1}", of.Name, value);
+                } else {
+                    result.AppendFormat(CultureInfo.InvariantCulture, " {0} {1}", of.Name, "\"" + value.ToString().Replace("\"", "\\\"") + "\"");
                 }
             }
 
