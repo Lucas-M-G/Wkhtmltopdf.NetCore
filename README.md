@@ -1,7 +1,5 @@
 # Wkhtmltopdf.NetCore
 
-![NuGet](https://buildstats.info/nuget/Wkhtmltopdf.NetCore)
-[![Build status](https://ci.appveyor.com/api/projects/status/uws43d45pusuhq3a?svg=true)](https://ci.appveyor.com/project/fpanaccia/wkhtmltopdf-netcore-qft6o)
 
 This project implements the library wkhtmltopdf for asp net core, working in Windows, Linux, macOS and docker.
 
