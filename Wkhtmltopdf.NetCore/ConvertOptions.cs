@@ -30,6 +30,7 @@ namespace Wkhtmltopdf.NetCore {
             this.FooterFontName = options.FooterFontName;
             this.FooterFontSize = options.FooterFontSize;
             this.FooterSpacing = options.FooterSpacing;
+            this.LocalDataPath = options.LocalDataPath;
         }
 
         /// <summary>
@@ -138,6 +139,12 @@ namespace Wkhtmltopdf.NetCore {
         /// </summary>
         [OptionFlag("--footer-spacing")]
         public int? FooterSpacing { get; set; }
+
+        /// <summary>
+        /// Allows files from local (path)
+        /// </summary>
+        [OptionFlag("--allow")]
+        public string LocalDataPath { get; set; }
 
         protected string GetConvertOptions() {
             var result = new StringBuilder();
