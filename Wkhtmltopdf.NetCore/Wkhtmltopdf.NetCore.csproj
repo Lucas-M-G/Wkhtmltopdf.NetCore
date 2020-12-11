@@ -5,9 +5,7 @@
     <AssemblyVersion>3.1.1.0</AssemblyVersion>
     <FileVersion>3.1.1.0</FileVersion>
     <Version>3.1.1</Version>
-    <Description>This project implements the library wkhtmltopdf for asp net core and a view engine, working in windows, macos, linux and docker.
-
-For more information about how to use it, go to https://github.com/fpanaccia/Wkhtmltopdf.NetCore.Example</Description>
+    <Description>This project implements the library wkhtmltopdf for asp net core and a view engine, working in windows, macos, linux and docker. For more information about how to use it, go to https://github.com/fpanaccia/Wkhtmltopdf.NetCore.Example</Description>
     <RepositoryUrl>https://github.com/fpanaccia/Wkhtmltopdf.NetCore</RepositoryUrl>
     <PackageReleaseNotes>net core 3.1 + Expose wkthml options</PackageReleaseNotes>
   </PropertyGroup>
